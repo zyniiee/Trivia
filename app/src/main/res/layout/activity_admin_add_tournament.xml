@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32sp"
+    android:background="@color/forth"
+
+    tools:context=".Activity.AdminAddTournamentActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add a quiz tournament"
+        style="@style/Headlines"/>
+
+    <EditText
+        android:id="@+id/tournamentNameEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16sp"
+        android:paddingBottom="16dp"
+        android:inputType="text"
+        android:hint="Name"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        style="@style/body_12_regular"
+        android:paddingStart="16sp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Category"
+            style="@style/body_12_regular"
+            android:paddingStart="16sp"
+            android:paddingEnd="4sp"/>
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown"
+            android:padding="16sp"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Difficulty"
+            style="@style/body_12_regular"
+            android:paddingStart="16sp"
+            android:paddingEnd="4sp"/>
+        <Spinner
+            android:id="@+id/difficulty_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown"
+            android:padding="16sp"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:hint="Select Start Date"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:background="@color/forth"
+            android:paddingTop="32sp"
+            android:paddingBottom="16dp"
+            android:id="@+id/tournamentStartDateEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:inputType="none"
+            android:clickable="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            style="@style/body_12_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:hint="Select End Date">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:paddingTop="32sp"
+            android:paddingBottom="16dp"
+            android:background="@color/forth"
+            android:id="@+id/tournamentEndDateEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:inputType="none"
+            android:clickable="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            style="@style/body_12_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:layout_marginTop="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add tournament"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="invisible"
+        android:id="@+id/categoryRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
