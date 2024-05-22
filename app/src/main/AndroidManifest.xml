@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,30 +16,37 @@
         android:theme="@style/Theme.MaterialComponents.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.AdminListLayoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.TriviaQuestionsListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+        <activity
+            android:name=".Activity.AdminUpdateTournamentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.QuestionViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.UserDashboardActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.AdminDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.AdminUpdateTournamnetActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activity.AdminAddTournamentActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.LogInActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".Activity.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar">
-            >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

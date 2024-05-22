@@ -4,7 +4,7 @@ import com.example.a2_p2.Model.CategoryModel;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-public class ApiResponse {
+public class CategoriesResponse {
     @SerializedName("trivia_categories")
     private List<CategoryModel> triviaCategories;
 
@@ -15,4 +15,6 @@ public class ApiResponse {
     public void setTriviaCategories(List<CategoryModel> triviaCategories) {
         this.triviaCategories = triviaCategories;
     }
+
+
 }

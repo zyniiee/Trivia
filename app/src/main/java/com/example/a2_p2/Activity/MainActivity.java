@@ -31,6 +31,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button toUser = findViewById(R.id.toUser);
+        toUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UserDashboardActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button toAdmin = findViewById(R.id.toAdmin);
+        toAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AdminDashboardActivity.class);
+                startActivity(intent);
+            }
+        });
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://a2-p2-7408a-default-rtdb.firebaseio.com");
         DatabaseReference myRef = database.getReference("message");

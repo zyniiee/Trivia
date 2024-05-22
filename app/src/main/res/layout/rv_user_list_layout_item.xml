@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16sp"
+    android:layout_marginBottom="16sp"
+    android:background="@color/second">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/trivia_layout_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trivia Name"
+                style="@style/Headlines"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end|center_vertical"
+                >
+                <TextView
+                    android:id="@+id/trivia_layout_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    style="@style/body_12_medium"
+                    />
+                <ImageView
+                    android:layout_marginStart="1sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/heart"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/forth"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8sp"
+                android:paddingBottom="8sp"
+                >
+                <TextView
+                    android:id="@+id/trivia_layout_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Category"
+                    style="@style/body_12_medium"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/forth"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="8sp"
+                android:paddingBottom="8sp"
+
+                >
+                <TextView
+                    android:id="@+id/trivia_layout_difficulty"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Difficulty"
+                    style="@style/body_12_medium"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/forth"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="8sp"
+                android:paddingBottom="8sp"
+
+                >
+                <TextView
+                    android:id="@+id/trivia_layout_status"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Status: "
+                    style="@style/body_12_medium"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/forth"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="8sp"
+                android:paddingBottom="8sp"
+
+                >
+                <TextView
+                    android:id="@+id/trivia_layout_fromDate"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="From: "
+                    style="@style/body_12_medium"
+                    />
+                <LinearLayout
+                    android:layout_width="1sp"
+                    android:layout_height="match_parent"
+                    android:background="@color/forth"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="4sp"
+                    >
+                    <TextView
+                        android:id="@+id/trivia_layout_toDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="To: "
+                        style="@style/body_12_medium"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/forth"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="8sp">
+            <Button
+                android:id="@+id/join_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                style="@style/primary_button"
+                android:text="Join"/>
+            <Button
+                android:id="@+id/like_button"
+                android:layout_marginStart="1sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"                android:layout_height="match_parent"
+                style="@style/secondary_button"
+                android:text="Like"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

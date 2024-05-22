@@ -36,6 +36,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         CategoryModel categoryItem = categoryModelList.get(position);
         Log.d("Adapter", "Binding category: " + categoryItem.getCategoryName()); // Log each item binding
         holder.categoryNameView.setText(categoryItem.getCategoryName());
+        holder.categoryIdView.setText(String.valueOf(categoryItem.getId()));
     }
 
     @Override
@@ -45,9 +46,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView categoryNameView;
+        public TextView categoryIdView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryNameView = itemView.findViewById(R.id.categoryRvTv);
+            categoryIdView = itemView.findViewById(R.id.categoryIdRvTv);
         }
     }
 }

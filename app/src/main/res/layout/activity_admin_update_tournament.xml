@@ -11,17 +11,19 @@
     android:paddingLeft="16sp"
     android:paddingRight="16sp"
     android:background="@color/black"
-    tools:context=".Activity.AdminAddTournamentActivity">
+    tools:context=".Activity.AdminUpdateTournamentActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16sp"
         android:background="@color/second">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add a quiz tournament"
+            android:text="Update quiz tournament"
             style="@style/Headlines"/>
 
         <EditText
@@ -34,64 +36,19 @@
             android:hint="Name"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
-            style="@style/body_12_regular"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category"
-                style="@style/body_12_regular"
-                android:paddingEnd="4sp"/>
-            <Spinner
-                android:id="@+id/category_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:spinnerMode="dropdown"
-                android:padding="16sp"
-                android:textColor="@color/white"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Difficulty"
-                style="@style/body_12_regular"
-                android:paddingEnd="4sp"/>
-            <Spinner
-                android:id="@+id/difficulty_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:spinnerMode="dropdown"
-                android:padding="16sp"
-                android:textColor="@color/black"
-                />
-        </LinearLayout>
+            style="@style/body_12_regular"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:hint="Start Date"
-            >
+            android:hint="Start Date">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:paddingTop="32sp"
-                android:paddingBottom="16sp"
-                android:paddingStart="0sp"
                 android:background="@color/second"
+                android:paddingTop="32sp"
+                android:paddingBottom="16dp"
                 android:id="@+id/tournamentStartDateEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,47 +57,39 @@
                 android:clickable="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                style="@style/body_12_regular" />
+                style="@style/body_12_regular"
+                android:paddingStart="0dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:hint="End Date">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:paddingTop="32sp"
                 android:paddingBottom="16dp"
+                android:background="@color/second"
                 android:id="@+id/tournamentEndDateEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:inputType="none"
                 android:clickable="true"
-                android:paddingStart="0sp"
-                android:background="@color/second"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                style="@style/body_12_regular" />
+                android:paddingStart="0dp"
+                style="@style/body_12_regular"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <Button
-            android:id="@+id/addTournamentButton"
             android:layout_marginTop="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add tournament"
-            style="@style/primary_button"/>
+            android:text="Update tournament"
+            style="@style/primary_button"
+            android:id="@+id/update_button"/>
     </LinearLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:visibility="invisible"
-        android:id="@+id/categoryRv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
 </LinearLayout>

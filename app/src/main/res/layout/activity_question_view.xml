@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    tools:context=".Activity.QuestionViewActivity"
+   >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16sp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32sp"
+                android:layout_marginBottom="32sp"
+                android:progress="10"
+                android:progressBackgroundTint="@color/forth"
+                android:progressTint="@color/first" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16sp"
+                android:background="@color/second">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/third"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="8sp">
+
+                        <TextView
+                            android:id="@+id/trivia_item_question_number"
+                            style="@style/Headlines"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Q1"
+                            android:textColor="@color/first" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/trivia_item_question"
+                        style="@style/body_16_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="4sp"
+                        android:text="Which Disney character sings the song &quot;A Dream is a Wish Your Heart Makes&quot;?" />
+                </LinearLayout>
+
+                <RadioGroup
+                    android:id="@+id/radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        style="@style/body_12_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cinderella" />
+
+                    <RadioButton
+                        style="@style/body_12_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Belle" />
+
+                    <RadioButton
+                        style="@style/body_12_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Snow White" />
+
+                    <RadioButton
+                        style="@style/body_12_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pocahontas" />
+                </RadioGroup>
+
+                <TextView
+                    style="@style/body_12_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16sp"
+                    android:paddingBottom="16sp"
+                    android:text="Congratulations! You got it right!" />
+
+                <TextView
+                    style="@style/body_12_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16sp"
+                    android:paddingBottom="16sp"
+                    android:text="Oops! That's not quite right. Better luck next time!" />
+
+                <Button
+                    style="@style/primary_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Next question" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    </LinearLayout>
+

@@ -6,27 +6,31 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a2_p2.API.ApiClient;
-import com.example.a2_p2.API.ApiResponse;
 import com.example.a2_p2.API.ApiService;
-import com.example.a2_p2.Adapter.CategoryAdapter;
+import com.example.a2_p2.API.CategoriesResponse;
+import com.example.a2_p2.API.QuestionResponse;
 import com.example.a2_p2.Model.CategoryModel;
+import com.example.a2_p2.Model.QuestionModel;
+import com.example.a2_p2.Model.TournamentModel;
 import com.example.a2_p2.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,44 +39,35 @@ import retrofit2.Response;
 public class AdminAddTournamentActivity extends AppCompatActivity {
     private TextInputEditText startDate, endDate;
     private ApiService apiService;
-    private AutoCompleteTextView selectCategory, selectDifficulty;
-    private CategoryAdapter categoryAdapter;
-    private RecyclerView categoryRv;
-    private Spinner difficultySpinner;
+    private Spinner difficultySpinner, categorySpinner;
+    private List<CategoryModel> categoryModelList;
+    private EditText tournamentName;
+    private DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_tournament);
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://a2-p2-7408a-default-rtdb.firebaseio.com");
+        databaseReference = database.getReference("tournaments");
+        tournamentName = findViewById(R.id.tournamentNameEt);
         startDate = findViewById(R.id.tournamentStartDateEt);
         endDate = findViewById(R.id.tournamentEndDateEt);
-        categoryRv = findViewById(R.id.categoryRv);
-        categoryRv.setLayoutManager(new LinearLayoutManager(this));
-        // Disable editing
+
+        // Disable editing for date fields
         startDate.setFocusable(false);
         startDate.setClickable(true);
         endDate.setFocusable(false);
         endDate.setClickable(true);
-        startDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getCurrentDate(startDate);
-            }
-        });
-        endDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getCurrentDate(endDate);
-            }
-        });
+
+        startDate.setOnClickListener(v -> getCurrentDate(startDate));
+        endDate.setOnClickListener(v -> getCurrentDate(endDate));
 
         apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
 
         difficultySpinner = findViewById(R.id.difficulty_spinner);
-        difficultySpinner = findViewById(R.id.difficulty_spinner);
-        ArrayAdapter<CharSequence> difficultyAdapter;
-        difficultyAdapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(this,
                 R.array.difficulty_array,
                 R.layout.spinner_difficulty_item);
         difficultyAdapter.setDropDownViewResource(R.layout.spinner_difficulty_item);
@@ -81,48 +76,59 @@ public class AdminAddTournamentActivity extends AppCompatActivity {
         difficultySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedDifficulty = parent.getItemAtPosition(position).toString();
-                Toast.makeText(AdminAddTournamentActivity.this, "Selected difficulty: " + selectedDifficulty, Toast.LENGTH_SHORT).show();
+                // Handle difficulty selection
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Handle the case where nothing is selected
+                // Handle no selection
             }
         });
 
-
-        fetchCategoriesInRv();
         fetchCategories();
+        categorySpinner = findViewById(R.id.category_spinner);
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Handle category selection
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle no selection
+            }
+        });
+
+        Button addTournamentButton = findViewById(R.id.addTournamentButton);
+        addTournamentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createQuiz();
+            }
+        });
+
     }
 
-
-    private void fetchCategoriesInRv() {
-        apiService.getCategories().enqueue(new Callback<ApiResponse>() {
+    private void fetchCategories() {
+        apiService.getCategories().enqueue(new Callback<CategoriesResponse>() {
             @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+            public void onResponse(Call<CategoriesResponse> call, Response<CategoriesResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<CategoryModel> categories = response.body().getTriviaCategories();
-                    Log.d("API Response", "Categories: " + categories); // Log the list
-                    categoryAdapter = new CategoryAdapter(categories, AdminAddTournamentActivity.this);
-                    categoryRv.setAdapter(categoryAdapter);
+                    categoryModelList = response.body().getTriviaCategories();
+                    setupCategorySpinner(categoryModelList);
                 } else {
-                    try {
-                        Log.e("API Error", "Response: " + response.errorBody().string()); // Log error details
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                     Toast.makeText(AdminAddTournamentActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                Log.e("API Failure", t.getMessage()); // Log the failure message
+            public void onFailure(Call<CategoriesResponse> call, Throwable t) {
                 Toast.makeText(AdminAddTournamentActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     private void setupCategorySpinner(List<CategoryModel> categoryModelList) {
         List<String> categoryNames = new ArrayList<>();
         for (CategoryModel category : categoryModelList) {
@@ -131,40 +137,7 @@ public class AdminAddTournamentActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_category_item, categoryNames);
         adapter.setDropDownViewResource(R.layout.spinner_category_item);
-
-        Spinner categorySpinner = findViewById(R.id.category_spinner);
         categorySpinner.setAdapter(adapter);
-
-        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedCategory = parent.getItemAtPosition(position).toString();
-                Toast.makeText(AdminAddTournamentActivity.this, "Selected category: " + selectedCategory, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Handle the case where nothing is selected
-            }
-        });
-    }
-    private void fetchCategories() {
-        apiService.getCategories().enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<CategoryModel> categories = response.body().getTriviaCategories();
-                    setupCategorySpinner(categories);
-                } else {
-                    Toast.makeText(AdminAddTournamentActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                Toast.makeText(AdminAddTournamentActivity.this, "Failed to fetch categories", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void getCurrentDate(final TextInputEditText dateEt) {
@@ -179,14 +152,10 @@ public class AdminAddTournamentActivity extends AppCompatActivity {
             selectedDate.set(Calendar.MONTH, month1);
             selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            // Get today's date
             Calendar today = Calendar.getInstance();
-
             if (selectedDate.before(today)) {
-                // Show a message if the selected date is earlier than today
-                Toast.makeText(AdminAddTournamentActivity.this, "Start date cannot be earlier than today", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminAddTournamentActivity.this, "Date cannot be earlier than today", Toast.LENGTH_SHORT).show();
             } else {
-                // Set the selected date to the text input field
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 dateEt.setText(simpleDateFormat.format(selectedDate.getTime()));
                 validateEndDate();
@@ -203,12 +172,8 @@ public class AdminAddTournamentActivity extends AppCompatActivity {
         if (!startDateText.isEmpty() && !endDateText.isEmpty()) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
             try {
-                Calendar start = Calendar.getInstance();
-                start.setTime(simpleDateFormat.parse(startDateText));
-
-                Calendar end = Calendar.getInstance();
-                end.setTime(simpleDateFormat.parse(endDateText));
-
+                Date start = simpleDateFormat.parse(startDateText);
+                Date end = simpleDateFormat.parse(endDateText);
 
                 if (end.before(start)) {
                     endDate.setError("End date cannot be before start date");
@@ -220,4 +185,65 @@ public class AdminAddTournamentActivity extends AppCompatActivity {
             }
         }
     }
- }
+    private void createQuiz() {
+        String quizName = tournamentName.getText().toString();
+        String selectedCategory = categorySpinner.getSelectedItem().toString();
+        String selectedDifficulty = difficultySpinner.getSelectedItem().toString();
+        String startDateText = startDate.getText().toString();
+        String endDateText = endDate.getText().toString();
+
+        if (quizName.isEmpty() || selectedCategory.isEmpty() || selectedDifficulty.isEmpty() || startDateText.isEmpty() || endDateText.isEmpty()) {
+            Toast.makeText(AdminAddTournamentActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Find the selected category ID
+        int categoryId = -1;
+        for (CategoryModel category : categoryModelList) {
+            if (category.getCategoryName().equals(selectedCategory)) {
+                categoryId = category.getId();
+                break;
+            }
+        }
+
+        if (categoryId == -1) {
+            Toast.makeText(AdminAddTournamentActivity.this, "Invalid category selected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Call<QuestionResponse> call = apiService.getQuestions(10, categoryId, selectedDifficulty.toLowerCase(Locale.ROOT));
+        call.enqueue(new Callback<QuestionResponse>() {
+            @Override
+            public void onResponse(Call<QuestionResponse> call, Response<QuestionResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<QuestionModel> questions = response.body().getResults();
+                    if (questions.isEmpty()) {
+                        Toast.makeText(AdminAddTournamentActivity.this, "No questions found for the selected category and difficulty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    TournamentModel tournament = new TournamentModel();
+                    tournament.setName(quizName);
+                    tournament.setCategory(selectedCategory);
+                    tournament.setDifficulty(selectedDifficulty);
+                    tournament.setStartDate(startDateText);
+                    tournament.setEndDate(endDateText);
+                    tournament.setQuestions(questions);
+
+                    databaseReference.push().setValue(tournament)
+                            .addOnSuccessListener(aVoid -> Toast.makeText(AdminAddTournamentActivity.this, "Quiz Created", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e -> Toast.makeText(AdminAddTournamentActivity.this, "Failed to create quiz", Toast.LENGTH_SHORT).show());
+                } else {
+                    Toast.makeText(AdminAddTournamentActivity.this, "Failed to fetch questions", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<QuestionResponse> call, Throwable t) {
+                Toast.makeText(AdminAddTournamentActivity.this, "Failed to fetch questions", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+}

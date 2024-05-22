@@ -1,0 +1,17 @@
+<!-- radio_button_border.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Checked state -->
+    <item android:state_checked="true">
+        <shape android:shape="oval">
+            <!-- Green border color for checked state -->
+            <stroke android:color="#00C14A" android:width="2dp" />
+        </shape>
+    </item>
+    <!-- Unchecked state -->
+    <item android:state_checked="false">
+        <shape android:shape="oval">
+            <!-- Black border color for unchecked state -->
+            <stroke android:color="#000000" android:width="2dp" />
+        </shape>
+    </item>
+</selector>

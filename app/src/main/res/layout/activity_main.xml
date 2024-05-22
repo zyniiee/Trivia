@@ -7,8 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".Activity.MainActivity"
     android:orientation="vertical"
-    android:background="@color/forth"
-    android:padding="32dp"
+    android:background="@color/black"
+    android:paddingTop="32sp"
+    android:paddingBottom="32sp"
+    android:paddingLeft="16sp"
+    android:paddingRight="16sp"
     android:gravity="center">
 
 
@@ -35,8 +38,25 @@
             android:layout_height="wrap_content"
             android:text="Get started!"
             style="@style/primary_button"
+            android:layout_marginBottom="16sp"
+            />
+        <Button
+            android:id="@+id/toAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To admin!"
+            style="@style/primary_button"
+            android:layout_marginBottom="16sp"
             />
 
+        <Button
+            android:id="@+id/toUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To user!"
+            style="@style/primary_button"
+
+            />
     </LinearLayout>
 
 </LinearLayout>
