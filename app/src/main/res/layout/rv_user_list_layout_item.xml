@@ -32,8 +32,8 @@
                     android:id="@+id/trivia_layout_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12"
                     style="@style/body_12_medium"
+                    android:text="0"
                     />
                 <ImageView
                     android:layout_marginStart="1sp"
@@ -178,8 +178,8 @@
             <Button
                 android:id="@+id/like_button"
                 android:layout_marginStart="1sp"
-                android:layout_width="0dp"
-                android:layout_weight="1"                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 style="@style/secondary_button"
                 android:text="Like"/>
 

@@ -33,8 +33,8 @@
                     android:id="@+id/trivia_layout_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12"
                     style="@style/body_12_medium"
+                    android:text="0"
                     />
                 <ImageView
                     android:layout_marginStart="1sp"

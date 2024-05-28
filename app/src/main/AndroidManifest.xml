@@ -16,12 +16,8 @@
         android:theme="@style/Theme.MaterialComponents.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".Activity.AdminListLayoutActivity"
+            android:name=".Activity.TournamentResultActivity"
             android:exported="false" />
-        <activity
-            android:name=".Activity.TriviaQuestionsListActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".Activity.AdminUpdateTournamentActivity"
             android:exported="false" />

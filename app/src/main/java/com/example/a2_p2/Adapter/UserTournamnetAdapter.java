@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,19 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.a2_p2.Activity.QuestionViewActivity;
 import com.example.a2_p2.Model.TournamentModel;
 import com.example.a2_p2.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class UserTournamnetAdapter extends RecyclerView.Adapter<UserTournamnetAdapter.TournamentViewHolder> {
     private List<TournamentModel> tournaments;
     private Context context;
-    private android.graphics.Color Color;
 
     public UserTournamnetAdapter(List<TournamentModel> tournaments, Context context) {
         this.tournaments = tournaments;
@@ -49,62 +44,49 @@ public class UserTournamnetAdapter extends RecyclerView.Adapter<UserTournamnetAd
         holder.difficultyTextView.setText("Difficulty: " + tournament.getDifficulty());
         holder.fromDateTextView.setText("From: " + tournament.getStartDate());
         holder.toDateTextView.setText("To: " + tournament.getEndDate());
-        holder.likesTextView.setText(String.valueOf(tournament.getLikes()));
         holder.tvTournamentStatus.setText("Status: " + tournament.getStatus());
+        holder.likesTextView.setText(String.valueOf(tournament.getLikes()));
 
         // Disable join button for "upcoming" or "past" tournaments
         if ("Upcoming".equals(tournament.getStatus()) || "Past".equals(tournament.getStatus())) {
             holder.joinButton.setEnabled(false);
+            holder.joinButton.setText("Unavailable");
             holder.joinButton.setBackgroundColor(Color.parseColor("#282828"));
             holder.joinButton.setTextColor(Color.parseColor("#606060"));
-
         } else {
             holder.joinButton.setEnabled(true);
+            holder.joinButton.setText("Join");
         }
+
+        // Set default button text to "Like"
+        holder.likeButton.setText("Like");
+        AtomicReference<Integer> currentLikes = new AtomicReference<>(tournament.getLikes());
+        holder.likeButton.setOnClickListener(v -> {
+            if ("Like".equals(holder.likeButton.getText())) {
+                currentLikes.getAndSet(currentLikes.get() + 1);
+                holder.likesTextView.setText(String.valueOf(currentLikes));
+                holder.likeButton.setText("Unlike");
+            } else if ("Unlike".equals(holder.likeButton.getText())) {
+                currentLikes.getAndSet(currentLikes.get() - 1);
+                holder.likesTextView.setText(String.valueOf(currentLikes));
+                holder.likeButton.setText("Like");
+            }
+        });
 
         // Handle Join button click
         holder.joinButton.setOnClickListener(v -> {
             if (holder.joinButton.isEnabled()) {
                 // Handle join button click logic
                 Intent intent = new Intent(context, QuestionViewActivity.class);
-                intent.putExtra("tournament", tournament);
+                intent.putExtra("tournament_id", tournament.getId());
                 context.startActivity(intent);
+            } else {
+                // Show toast message when the button is disabled
+                Toast.makeText(context, "Unable to join due to tournament status: " + tournament.getStatus(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Handle Like button click
-        holder.likeButton.setOnClickListener(v -> {
-            DatabaseReference likesRef = FirebaseDatabase.getInstance()
-                    .getReference("tournaments")
-                    .child(tournament.getId())
-                    .child("likes");
 
-            likesRef.runTransaction(new Transaction.Handler() {
-                @Override
-                public Transaction.Result doTransaction(MutableData mutableData) {
-                    Integer currentLikes = mutableData.getValue(Integer.class);
-                    if (currentLikes == null) {
-                        mutableData.setValue(1);
-                    } else {
-                        if (holder.likeButton.isSelected()) {
-                            mutableData.setValue(currentLikes - 1);
-                        } else {
-                            mutableData.setValue(currentLikes + 1);
-                        }
-                    }
-                    return Transaction.success(mutableData);
-                }
-
-                @Override
-                public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
-                    if (committed) {
-                        holder.likeButton.setSelected(!holder.likeButton.isSelected());
-                        int newLikesCount = dataSnapshot.getValue(Integer.class);
-                        holder.likesTextView.setText(String.valueOf(newLikesCount));
-                    }
-                }
-            });
-        });
     }
 
     @Override

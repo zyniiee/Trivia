@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.TournamentResultActivity"
+    android:orientation="vertical"
+    android:padding="16sp"
+    android:gravity="center">
+    <TextView
+        android:id="@+id/score_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your score: 0 out of 10"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:paddingBottom="16dp"/>
+
+    <Button
+        android:id="@+id/like_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Like"
+        style="@style/primary_button"/>
+
+    <Button
+        android:id="@+id/dislike_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dislike"
+        style="@style/primary_button"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back to Dashboard"
+        style="@style/primary_button"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>
