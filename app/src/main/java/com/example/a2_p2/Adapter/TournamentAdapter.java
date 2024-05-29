@@ -24,6 +24,8 @@ import java.util.List;
 public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.TournamentViewHolder> {
     private List<TournamentModel> tournamentList;
     private Context context;
+    private static final String PREFS_NAME = "TournamentPrefs";
+    private static final String KEY_HAS_COMPLETED = "hasCompletedTournament";
 
     public TournamentAdapter(List<TournamentModel> tournamentList, Context context) {
         this.tournamentList = tournamentList;

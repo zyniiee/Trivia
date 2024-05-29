@@ -1,6 +1,7 @@
 package com.example.a2_p2.Activity;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,10 @@ public class UserDashboardActivity extends AppCompatActivity {
     private UserTournamnetAdapter adapter;
     private List<TournamentModel> tournamentList = new ArrayList<>();
     private DatabaseReference databaseReference;
+    private static final String PREFS_NAME = "TournamentPrefs";
+    private static final String KEY_HAS_COMPLETED = "hasCompletedTournament";
 
+    private Button joinButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

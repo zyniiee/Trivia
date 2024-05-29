@@ -9,7 +9,5 @@ public interface ApiService {
     Call<CategoriesResponse> getCategories();
 
     @GET("/api.php")
-    Call<QuestionResponse> getQuestions (@Query("amount") int amount,
-                                        @Query("category") int category,
-                                        @Query("difficulty") String difficulty);
+    Call<QuestionResponse> getQuestions(@Query("amount") int amount, @Query("category") int categoryId, @Query("difficulty") String difficulty);
 }

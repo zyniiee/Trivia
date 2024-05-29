@@ -18,14 +18,8 @@
         android:id="@+id/toAddTournament"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Tournament" />
-    <Button
-        style="@style/secondary_button"
-        android:id="@+id/toQuizView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quiz View"/>
-
+        android:text="Add Tournament"
+        android:layout_marginBottom="16sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

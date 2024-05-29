@@ -2,6 +2,7 @@ package com.example.a2_p2.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ import java.util.concurrent.atomic.AtomicReference;
 public class UserTournamnetAdapter extends RecyclerView.Adapter<UserTournamnetAdapter.TournamentViewHolder> {
     private List<TournamentModel> tournaments;
     private Context context;
+    private static final String PREFS_NAME = "TournamentPrefs";
+    private static final String KEY_HAS_COMPLETED = "hasCompletedTournament";
 
     public UserTournamnetAdapter(List<TournamentModel> tournaments, Context context) {
         this.tournaments = tournaments;
@@ -46,7 +49,23 @@ public class UserTournamnetAdapter extends RecyclerView.Adapter<UserTournamnetAd
         holder.toDateTextView.setText("To: " + tournament.getEndDate());
         holder.tvTournamentStatus.setText("Status: " + tournament.getStatus());
         holder.likesTextView.setText(String.valueOf(tournament.getLikes()));
+        // Check if the tournament has been completed
+        SharedPreferences preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        boolean hasCompletedTournament = preferences.getBoolean(KEY_HAS_COMPLETED + tournament.getId(), false);
 
+        if (hasCompletedTournament) {
+            holder.joinButton.setText("Unavailable");
+            holder.joinButton.setEnabled(false);
+        } else {
+            holder.joinButton.setText("Join");
+            holder.joinButton.setEnabled(true);
+
+            holder.joinButton.setOnClickListener(v -> {
+                Intent intent = new Intent(context, QuestionViewActivity.class);
+                intent.putExtra("tournament_id", tournament.getId());
+                context.startActivity(intent);
+            });
+        }
         // Disable join button for "upcoming" or "past" tournaments
         if ("Upcoming".equals(tournament.getStatus()) || "Past".equals(tournament.getStatus())) {
             holder.joinButton.setEnabled(false);

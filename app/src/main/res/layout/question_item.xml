@@ -3,14 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black">
+<LinearLayout
     android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:background="@color/second">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="8sp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -18,7 +22,8 @@
             android:background="@color/third"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="8dp"
+            >
 
             <TextView
                 android:id="@+id/trivia_item_question_number"
@@ -26,7 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Q1"
-                android:textColor="@color/first" />
+                android:textColor="@color/first"
+                />
         </LinearLayout>
 
         <TextView
@@ -68,6 +74,15 @@
             android:text="Pocahontas" />
     </RadioGroup>
 
+
+    <Button
+        android:layout_marginTop="8sp"
+        android:id="@+id/next_button"
+        style="@style/primary_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next question" />
+
     <TextView
         android:id="@+id/feedback_text"
         style="@style/body_12_medium"
@@ -75,13 +90,9 @@
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:text="Congratulations! You got it right!" />
+        android:visibility="gone" />
 
-    <Button
-        android:id="@+id/next_button"
-        style="@style/primary_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Next question" />
+</LinearLayout>
+
 
 </LinearLayout>

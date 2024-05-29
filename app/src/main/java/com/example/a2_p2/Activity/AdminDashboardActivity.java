@@ -43,11 +43,6 @@ public class AdminDashboardActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        Button toQuizView = findViewById(R.id.toQuizView);
-        toQuizView.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminDashboardActivity.this, QuestionViewActivity.class);
-            startActivity(intent);
-        });
 
         recyclerView = findViewById(R.id.rv_trivia_list_layout_item);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

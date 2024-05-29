@@ -9,35 +9,52 @@
     android:orientation="vertical"
     android:padding="16sp"
     android:gravity="center">
-    <TextView
-        android:id="@+id/score_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your score: 0 out of 10"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:paddingBottom="16dp"/>
-
-    <Button
-        android:id="@+id/like_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Like"
-        style="@style/primary_button"/>
+        android:padding="16sp"
+        android:orientation="vertical"
+        android:background="@color/second">
+        <TextView
+            android:id="@+id/score_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You got: 9/10"
+            android:gravity="center"
+            android:textColor="@color/white"
+            style="@style/Headlines"
+            android:paddingBottom="16dp"/>
 
-    <Button
-        android:id="@+id/dislike_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Dislike"
-        style="@style/primary_button"
-        android:layout_marginTop="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/like_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Like"
+                style="@style/secondary_button"
+                android:layout_marginEnd="1sp"/>
 
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Back to Dashboard"
-        style="@style/primary_button"
-        android:layout_marginTop="16dp"/>
+            <Button
+                android:id="@+id/dislike_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Dislike"
+                style="@style/secondary_button"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back to Dashboard"
+            style="@style/primary_button"
+            android:layout_marginTop="1sp"/>
+    </LinearLayout>
 </LinearLayout>

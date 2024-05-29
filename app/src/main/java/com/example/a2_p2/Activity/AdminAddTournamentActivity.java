@@ -24,6 +24,7 @@ import com.example.a2_p2.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -185,6 +186,7 @@ public class AdminAddTournamentActivity extends AppCompatActivity {
             }
         }
     }
+
     private void createQuiz() {
         String quizName = tournamentName.getText().toString();
         String selectedCategory = categorySpinner.getSelectedItem().toString();
@@ -197,7 +199,6 @@ public class AdminAddTournamentActivity extends AppCompatActivity {
             return;
         }
 
-        // Find the selected category ID
         int categoryId = -1;
         for (CategoryModel category : categoryModelList) {
             if (category.getCategoryName().equals(selectedCategory)) {
@@ -217,33 +218,50 @@ public class AdminAddTournamentActivity extends AppCompatActivity {
             public void onResponse(Call<QuestionResponse> call, Response<QuestionResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<QuestionModel> questions = response.body().getResults();
-                    if (questions.isEmpty()) {
-                        Toast.makeText(AdminAddTournamentActivity.this, "No questions found for the selected category and difficulty", Toast.LENGTH_SHORT).show();
-                        return;
+
+                    // Log the raw API response for debugging
+                    Log.d("API_RESPONSE", "Raw response: " + response.raw().toString());
+
+                    // Log questions for debugging
+                    for (QuestionModel question : questions) {
+                        Log.d("QuestionModel", "Question: " + question.getQuestion());
+                        Log.d("QuestionModel", "Correct Answer: " + question.getCorrect_answer());
+                        Log.d("QuestionModel", "Incorrect Answers: " + question.getIncorrect_answers());
                     }
 
-                    TournamentModel tournament = new TournamentModel();
-                    tournament.setName(quizName);
-                    tournament.setCategory(selectedCategory);
-                    tournament.setDifficulty(selectedDifficulty);
-                    tournament.setStartDate(startDateText);
-                    tournament.setEndDate(endDateText);
-                    tournament.setQuestions(questions);
-
-                    databaseReference.push().setValue(tournament)
-                            .addOnSuccessListener(aVoid -> Toast.makeText(AdminAddTournamentActivity.this, "Quiz Created", Toast.LENGTH_SHORT).show())
-                            .addOnFailureListener(e -> Toast.makeText(AdminAddTournamentActivity.this, "Failed to create quiz", Toast.LENGTH_SHORT).show());
+                    // Save to Firebase
+                    saveToFirebase(quizName, selectedCategory, selectedDifficulty, startDateText, endDateText, questions);
                 } else {
+                    Log.e("API_RESPONSE", "Failed to fetch questions. Response: " + response.toString());
                     Toast.makeText(AdminAddTournamentActivity.this, "Failed to fetch questions", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<QuestionResponse> call, Throwable t) {
+                Log.e("API_CALL", "API call failed", t);
                 Toast.makeText(AdminAddTournamentActivity.this, "Failed to fetch questions", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void saveToFirebase(String name, String category, String difficulty, String startDate, String endDate, List<QuestionModel> questions) {
+        TournamentModel tournament = new TournamentModel();
+        tournament.setName(name);
+        tournament.setCategory(category);
+        tournament.setDifficulty(difficulty);
+        tournament.setStartDate(startDate);
+        tournament.setEndDate(endDate);
+        tournament.setQuestions(questions);
 
+        databaseReference.push().setValue(tournament)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("FIREBASE_SAVE", "Quiz Created successfully");
+                    Toast.makeText(AdminAddTournamentActivity.this, "Quiz Created", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FIREBASE_SAVE", "Failed to create quiz", e);
+                    Toast.makeText(AdminAddTournamentActivity.this, "Failed to create quiz", Toast.LENGTH_SHORT).show();
+                });
+    }
 }

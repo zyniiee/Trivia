@@ -30,7 +30,7 @@ public class TournamentResultActivity extends AppCompatActivity {
         int score = getIntent().getIntExtra("score", 0);
         int totalQuestions = getIntent().getIntExtra("totalQuestions", 0);
 
-        scoreTextView.setText("Your score: " + score + " out of " + totalQuestions);
+        scoreTextView.setText("Your got: " + score + " / " + totalQuestions);
 
         likeButton.setOnClickListener(v -> {
             Toast.makeText(this, "Glad you liked the quiz!", Toast.LENGTH_SHORT).show();

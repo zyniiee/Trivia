@@ -47,9 +47,11 @@
             android:text="To admin!"
             style="@style/primary_button"
             android:layout_marginBottom="16sp"
+            android:visibility="gone"
             />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/toUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
